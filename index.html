@@ -15,32 +15,113 @@
       margin: 0;
       font-family: "Cormorant Garamond", serif;
       letter-spacing: -2px;
+      min-height: 200vh; /* just so scrolling exists */
+    }
+
+    /* Sticky header */
+    header {
+      position: sticky;
+      top: 0;
+      background: white;
+      z-index: 10;
+      padding: 30px 0;
+      transition: padding 0.3s ease;
     }
 
     #main-text {
-      font-size: 65px;
-      margin: 40px 0 0;
-      text-align: center;
-    }
-
-    /* ONLY centers "Langford for life" */
-    #center-text {
-      height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-
-      
-    }
-
-    #center-text h1 {
       margin: 0;
-      font-size: clamp(24px, 4vw, 50px);
+      text-align: center;
+      font-size: clamp(48px, 10vw, 90px);
+      transition: font-size 0.3s ease;
     }
+
+    /* Collapsed state */
+    header.shrink {
+      padding: 10px 0;
+    }
+
+    header.shrink #main-text {
+      font-size: 32px;
+      letter-spacing: -1px;
+    }
+
+    /* Fake content so you can scroll */
+    .content {
+      padding: 60px 20px;
+      font-size: 20px;
+      text-align: center;
+    }
+
+    :root {
+  --tiffany-blue: #81d8d0;
+}
+
+/* Tiffany-style top bar */
+#top-banner {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background: var(--tiffany-blue);
+  color: black;
+  text-align: center;
+  font-size: 14px;
+  padding: 10px 40px;
+  z-index: 20;
+  font-weight: 500;
+}
+
+/* Close button */
+#close-banner {
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  font-size: 18px;
+}
+
+/* Push header down so it doesn't fight the banner */
+header {
+  top: 40px;
+}
+
   </style>
 </head>
+
 <body>
-  <h1 id="main-text">LANGFORD</h1>
+  <div id="top-banner">
+  Complimentary Shipping on All Orders
+  <span id="close-banner">×</span>
+</div>
+
+
+  <header id="header">
+    <h1 id="main-text">LANGFORD & CO.</h1>
+  </header>
+
+  <div class="content">
+    Scroll. This exists only so the header can feel important.
+  </div>
+
+  <script>
+    const header = document.getElementById("header");
+
+    window.addEventListener("scroll", () => {
+      if (window.scrollY > 50) {
+        header.classList.add("shrink");
+      } else {
+        header.classList.remove("shrink");
+      }
+    });
+
+      const banner = document.getElementById("top-banner");
+  const closeBtn = document.getElementById("close-banner");
+
+  closeBtn.addEventListener("click", () => {
+    banner.style.display = "none";
+    document.querySelector("header").style.top = "0";
+  });
+  </script>
+
 </body>
 </html>
